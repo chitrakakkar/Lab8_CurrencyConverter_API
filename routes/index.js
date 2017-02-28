@@ -27,17 +27,21 @@ router.get('/convert', function(req, res)
     var amounts = req.query.amount;
     var convert_from = req.query.from_currency;
     var convert_to = req.query.to_currency;
+    var rate_convertFrom = exchangeRates[convert_from];
+    var dollar_amount = amounts / rate_convertFrom;
+    var rate_convertTo = exchangeRates[convert_to];
+    var results = dollar_amount * rate_convertTo;
     if(convert_to.toString() == convert_from.toString())
     {
         // res.send(error,'showAlert');
+        var message= ("Nothing changes !! choose different currency forms to see the difference !");
         console.log("Can't convert the same currency !! choose different currency forms");
+        res.render('results', {Amount: amounts, result: results, from_currency: convert_from, to_currency: convert_to,message:message})
     }
-    else {
-        var rate_convertFrom = exchangeRates[convert_from];
-        var dollar_amount = amounts / rate_convertFrom;
-        var rate_convertTo = exchangeRates[convert_to];
-        var results = dollar_amount * rate_convertTo;
-        console.log(results);
+
+    else
+    {
+
         res.render('results', {Amount: amounts, result: results, from_currency: convert_from, to_currency: convert_to});
     }
 
