@@ -4,9 +4,6 @@
 var express = require('express');
 var router = express.Router();
 
-var exchangeRates={'Dollar':1,'Euros':0.94, 'INR':66.69};
-
-
 /*handle get request from home page*/
 router.get('/', function (req, res)
 
@@ -15,23 +12,30 @@ router.get('/', function (req, res)
 
 });
 
-// router.get(function (error)
-// {
-//         if(error.responseText == 'showAlert')
-//             alert("Can't convert the same currency !! choose different currency forms")
-//
-// });
 /* Handle currency form submit */
 router.get('/convert', function(req, res)
 {
     var amounts = req.query.amount;
     var convert_from = req.query.from_currency;
     var convert_to = req.query.to_currency;
-    var rate_convertFrom = exchangeRates[convert_from];
-    //converting everything to dollar
-    var dollar_amount = amounts / rate_convertFrom;
-    var rate_convertTo = exchangeRates[convert_to];
-    var results = dollar_amount * rate_convertTo;
+    var results=" ";
+    var API_url = "http://apilayer.net/api/live?access_key=025ea21aec0c56ae23ca8cf57297dfb1&currencies=USD,EUR,INR";
+    get_Parse_data_from_API(API_url, function(response)
+    {
+        // Here you have access to your variable
+        exchangeRate = response['quotes'];
+        console.log((exchangeRate)['USDUSD']);
+        var Final_exchangeRates =
+        {
+            'USD': (exchangeRate)['USDUSD'],
+            'EUR': (exchangeRate)['USDEUR'],
+            'INR': (exchangeRate)['USDINR']
+        };
+
+        var rate_convertFrom = Final_exchangeRates[convert_from];
+        var dollar_amount = amounts / rate_convertFrom;
+        var rate_convertTo = Final_exchangeRates[convert_to];
+        results = dollar_amount * rate_convertTo;
     if(convert_to.toString() == convert_from.toString())
     {
         // res.send(error,'showAlert');
@@ -46,7 +50,22 @@ router.get('/convert', function(req, res)
         res.render('results', {Amount: amounts, result: results, from_currency: convert_from, to_currency: convert_to});
     }
 
+    });
 });
-
+var exchangeRate= {};
+//http://stackoverflow.com/questions/23339907/returning-a-value-from-callback-function-in-node-js
+function get_Parse_data_from_API(API_url, callback)
+{
+    //The urllib.request module defines functions and classes which help in opening URLs (mostly HTTP) in a complex world
+    var urllib = require('urllib');
+    urllib.request(API_url, { wd: 'nodejs' }, function (err, data, response)
+    {
+        var statusCode = response.statusCode;
+        console.log(statusCode);
+        var exchange_rate_data = JSON.parse(data);
+        console.log("Here", exchange_rate_data );
+        return callback(exchange_rate_data );
+    });
+}
 
 module.exports= router;
