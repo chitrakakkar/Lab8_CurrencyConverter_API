@@ -11,16 +11,17 @@ router.get('/', function (req, res)
     res.render('index');
 
 });
-var API_KEY = process.env.CurrecnyConverter_API_Key;
+
 var exchangeRate= {};
 /* Handle currency form submit */
 router.get('/convert', function(req, res)
 {
+    var API_KEY = process.env.CurrecnyConverter_API_Key;
     var amounts = req.query.amount;
     var convert_from = req.query.from_currency;
     var convert_to = req.query.to_currency;
     var results=" ";
-    var API_url = 'http://apilayer.net/api/live?access_key='+API_KEY+'USD,EUR,INR';
+    var API_url = 'http://apilayer.net/api/live?access_key='+API_KEY+'&currencies=USD,EUR,INR';
     get_Parse_data_from_API(API_url, function(response)
     {
         // Here you have access to your variable
