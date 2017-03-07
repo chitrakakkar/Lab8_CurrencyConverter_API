@@ -11,7 +11,7 @@ router.get('/', function (req, res)
     res.render('index');
 
 });
-
+var exchangeRate= {};
 /* Handle currency form submit */
 router.get('/convert', function(req, res)
 {
@@ -52,7 +52,7 @@ router.get('/convert', function(req, res)
 
     });
 });
-var exchangeRate= {};
+
 //http://stackoverflow.com/questions/23339907/returning-a-value-from-callback-function-in-node-js
 function get_Parse_data_from_API(API_url, callback)
 {
