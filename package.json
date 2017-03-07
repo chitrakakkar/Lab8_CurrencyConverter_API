@@ -4,19 +4,17 @@
   "dependencies": {
     "express": "~4.14.1",
     "express-handlebars": "~3.0.0",
-    "request-parse-json": "^1.1.0"
+    "request-parse-json": "^1.1.0",
+    "urllib": "^2.21.0"
   },
-  "scripts":
-  {
+  "scripts": {
     "start": "node app.js"
   },
   "description": "Currency Converter",
   "main": "app.js",
   "author": "Chitra",
-  "engines":
-  {
-    "node":"6.9.4",
-    "npm":"3.10.10 "
-
+  "engines": {
+    "node": "6.9.4",
+    "npm": "3.10.10 "
   }
 }
