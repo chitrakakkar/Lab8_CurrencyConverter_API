@@ -19,7 +19,7 @@ router.get('/convert', function(req, res)
     var convert_from = req.query.from_currency;
     var convert_to = req.query.to_currency;
     var results=" ";
-    var API_url = "http://apilayer.net/api/live?access_key=025ea21aec0c56ae23ca8cf57297dfb1&currencies=USD,EUR,INR";
+    var API_url = "http://apilayer.net/api/live?access_key=KEY=USD,EUR,INR";
     get_Parse_data_from_API(API_url, function(response)
     {
         // Here you have access to your variable
