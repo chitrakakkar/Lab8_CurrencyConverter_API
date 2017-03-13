@@ -12,7 +12,7 @@ router.get('/', function (req, res)
 
 });
 
-var exchangeRate= {};
+var exchangeRate= {}; // empty dictionary to store the data
 /* Handle currency form submit */
 router.get('/convert', function(req, res)
 {
@@ -27,7 +27,7 @@ router.get('/convert', function(req, res)
     get_Parse_data_from_API(API_url, function(response)
     {
         // Here you have access to your variable
-        exchangeRate = response['quotes'];
+        exchangeRate = response['quotes']; // all the data from the aPI;picks value for 'quotes' which is the currency amount
         console.log((exchangeRate)['USDUSD']);
         var Final_exchangeRates =
         {
@@ -36,10 +36,10 @@ router.get('/convert', function(req, res)
             'INR': (exchangeRate)['USDINR']
         };
 
-        var rate_convertFrom = Final_exchangeRates[convert_from];
-        var dollar_amount = amounts / rate_convertFrom;
-        var rate_convertTo = Final_exchangeRates[convert_to];
-        results = dollar_amount * rate_convertTo;
+        var rate_convertFrom = Final_exchangeRates[convert_from]; // getting rate from the user-defined dictionary containing Data from API.
+        var dollar_amount = amounts / rate_convertFrom; // converting all currency to dollar
+        var rate_convertTo = Final_exchangeRates[convert_to]; // getting info from API
+        results = dollar_amount * rate_convertTo; // calculating the currency value
         //condition to check if user chooses the same form in both the boxes;
     if(convert_to.toString() == convert_from.toString())
     {
