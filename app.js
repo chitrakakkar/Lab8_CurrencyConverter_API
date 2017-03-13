@@ -1,6 +1,4 @@
-/**
- * Created by chitrakakkar on 2/23/17.
- */
+/* Created by chitrakakkar on 2/23/17.*/
 var express = require('express');
 var exp_hbs = require('express-handlebars');
  var path = require('path');
@@ -26,4 +24,4 @@ app.listen(process.env.PORT || 3000, function ()
     
 });
 
-    module.exports = app;
+module.exports = app;
